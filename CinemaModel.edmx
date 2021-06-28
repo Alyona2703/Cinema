@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CinemaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CinemaModelStoreContainer">
+    <EntitySet Name="Hall" EntityType="CinemaModel.Store.Hall" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MovieShow" EntityType="CinemaModel.Store.MovieShow" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Place" EntityType="CinemaModel.Store.Place" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Status" EntityType="CinemaModel.Store.Status" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="HallPlace" Association="CinemaModel.Store.HallPlace">
+      <End Role="Hall" EntitySet="Hall" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <AssociationSet Name="MovieShowPlace" Association="CinemaModel.Store.MovieShowPlace">
+      <End Role="MovieShow" EntitySet="MovieShow" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <AssociationSet Name="StatusPlace" Association="CinemaModel.Store.StatusPlace">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Hall">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameHall" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="MovieShow">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameMovie" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="DateShow" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hall" Type="int" Nullable="false" />
+    <Property Name="MovieShowId" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameStatus" Type="nvarchar" Nullable="false" MaxLength="30" />
+  </EntityType>
+  <Association Name="HallPlace">
+    <End Role="Hall" Type="CinemaModel.Store.Hall" Multiplicity="1" />
+    <End Role="Place" Type="CinemaModel.Store.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hall">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="Hall" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MovieShowPlace">
+    <End Role="MovieShow" Type="CinemaModel.Store.MovieShow" Multiplicity="1" />
+    <End Role="Place" Type="CinemaModel.Store.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieShow">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="MovieShowId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StatusPlace">
+    <End Role="Status" Type="CinemaModel.Store.Status" Multiplicity="1" />
+    <End Role="Place" Type="CinemaModel.Store.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CinemaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CinemaModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Hall" EntityType="CinemaModel.Hall" />
+          <EntitySet Name="MovieShow" EntityType="CinemaModel.MovieShow" />
+          <EntitySet Name="Place" EntityType="CinemaModel.Place" />
+          <EntitySet Name="Status" EntityType="CinemaModel.Status" />
+          <AssociationSet Name="HallPlace" Association="CinemaModel.HallPlace">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="MovieShowPlace" Association="CinemaModel.MovieShowPlace">
+            <End Role="MovieShow" EntitySet="MovieShow" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="StatusPlace" Association="CinemaModel.StatusPlace">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameHall" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Place" Relationship="CinemaModel.HallPlace" FromRole="Hall" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="MovieShow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameMovie" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateShow" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Place" Relationship="CinemaModel.MovieShowPlace" FromRole="MovieShow" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="HallName" Relationship="CinemaModel.HallPlace" FromRole="Place" ToRole="Hall" />
+          <Property Name="Hall" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MovieShow" Relationship="CinemaModel.MovieShowPlace" FromRole="Place" ToRole="MovieShow" />
+          <Property Name="MovieShowId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Status" Relationship="CinemaModel.StatusPlace" FromRole="Place" ToRole="Status" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Place" Relationship="CinemaModel.StatusPlace" FromRole="Status" ToRole="Place" />
+        </EntityType>
+        <Association Name="HallPlace">
+          <End Type="CinemaModel.Hall" Role="Hall" Multiplicity="1" />
+          <End Type="CinemaModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MovieShowPlace">
+          <End Type="CinemaModel.MovieShow" Role="MovieShow" Multiplicity="1" />
+          <End Type="CinemaModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieShow">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="MovieShowId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusPlace">
+          <End Type="CinemaModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="CinemaModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CinemaModelStoreContainer" CdmEntityContainer="CinemaModelContainer">
+    <EntitySetMapping Name="Hall">
+      <EntityTypeMapping TypeName="IsTypeOf(CinemaModel.Hall)">
+        <MappingFragment StoreEntitySet="Hall">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameHall" ColumnName="NameHall" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieShow">
+      <EntityTypeMapping TypeName="IsTypeOf(CinemaModel.MovieShow)">
+        <MappingFragment StoreEntitySet="MovieShow">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameMovie" ColumnName="NameMovie" />
+          <ScalarProperty Name="DateShow" ColumnName="DateShow" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Place">
+      <EntityTypeMapping TypeName="IsTypeOf(CinemaModel.Place)">
+        <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Hall" ColumnName="Hall" />
+          <ScalarProperty Name="MovieShowId" ColumnName="MovieShowId" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="IsTypeOf(CinemaModel.Status)">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
